@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - '0.10'
+before_install:
+  - currentfolder=${PWD##*/}
+  - if [ "$currentfolder" != 'generator-wikismith' ]; then cd .. && eval "mv $currentfolder generator-wikismith" && cd generator-wikismith; fi
+
