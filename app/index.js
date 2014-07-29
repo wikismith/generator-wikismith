@@ -3,9 +3,12 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
+var ghdownload = require('github-download');
 var chalk = require('chalk');
 var bower = require('gulp-bower');
 var fs = require('fs');
+var gulp = require('gulp');
+var npm = require('npm-install-dest');
 
 var WikismithGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -45,20 +48,37 @@ var WikismithGenerator = yeoman.generators.Base.extend({
     this.copy('_.gitignore', 'gitignore');
     this.directory('pages','pages');
 
-    this.directory('wikismith_modules','wikismith_modules')
+    ghdownload({user: 'wikismith', repo: 'wikismith_modules', ref: 'master'}, path.join(process.cwd(),'node_modules'))
+        .on('dir', function(dir) {
+          console.log(dir)
+        })
+        .on('file', function(file) {
+          console.log(file)
+        })
+        .on('zip', function(zipUrl) { //only emitted if Github API limit is reached and the zip file is downloaded
+          console.log(zipUrl)
+        })
+        .on('error', function(err) {
+          console.error(err)
+        })
         .on('end', function() {
-            var cwd = process.cwd();
-            var dir = path.join(cwd, 'wikismith_modules');
-            fs.readdirSync(dir).forEach(function(subdir) {
-                if (fs.statSync(path.join(dir, subdir)).isDirectory() ) {
-                    var bowerJson = path.join(dir, subdir, 'bower.json');
-                    if (fs.existsSync(bowerJson)) {
-                        bower({cwd: path.join(dir,subdir),
-                            directory: path.join(dir,subdir,'bower_components')});
+            gulp.src('./wikismith_modules/*/bower.json')
+                .pipe( es.map( function(file, cb) {
+                    var fcb = function() {
+                        cb(undefined, file);
                     }
-                }
-            });
-        });
+                    var destDir = path.join(process.cwd(), 'node_modules');
+                    var packageDir = path.dirname(file.path);
+                    npm(packageDir, destDir, fcb);
+                }) );
+
+            gulp.src('./wikismith_modules/*/bower.json')
+                .pipe(es.map( function(file, cb) {
+                        var module_path = path.dirname(file.path);
+                        bower({cwd: module_path});
+                        cb(undefined ,file);
+                     }));
+            })
   },
 
   npm: function() {
