@@ -1,20 +1,10 @@
 ---
-title: Wikismith
-subtitle: Static site generator for fans of bower and gulp
+title: Congratulations!
+subtitle: You have successfully setup your Wikismith project.
 module: bs3
 ---
 
-# Barcamp Rules
-
-Wikismith is an open-source node package that optimized for programmer happiness.  It works transparently with gulp and bower and favors coding over configuration.
-
-##Lorem Ipsum
-
-[[Lorem ipsum]] dolor sit amet, consectetur adipiscing elit. Duis suscipit risus nec lacinia pharetra.
-Ut magna diam, varius eu elementum vel, suscipit a magna. Nulla ullamcorper sagittis elit, eget
-tincidunt mi lobortis sollicitudin. Aliquam pretium est dui, eget ullamcorper diam tristique
-vulputate. Sed lobortis, purus sit amet condimentum rhoncus, eros nunc cursus mauris, vel lacinia
-neque neque et eros. Vestibulum mauris purus, pharetra in felis mollis, bibendum faucibus nisi.
+# Getting Started
 
 Nam dictum sapien a velit rhoncus condimentum.
 orem ipsum dolor sit amet, consectetur adipiscing elit. Duis suscipit risus nec lacinia pharetra.
@@ -24,7 +14,18 @@ purus sit amet condimentum rhoncus, eros nunc cursus mauris, vel lacinia neque n
 mauris purus, pharetra in felis mollis, bibendum faucibus nisi. Nam dictum sapien a velit rhoncus
 condimentum.
 
-##Duis Viverra
+
+###Lorem Ipsum
+
+Nam dictum sapien a velit rhoncus condimentum.
+orem ipsum dolor sit amet, consectetur adipiscing elit. Duis suscipit risus nec lacinia pharetra.
+t magna diam, varius eu elementum vel, suscipit a magna. Nulla ullamcorper sagittis elit, eget tincidunt
+mi lobortis sollicitudin. Aliquam pretium est dui, eget ullamcorper diam tristique vulputate. Sed lobortis,
+purus sit amet condimentum rhoncus, eros nunc cursus mauris, vel lacinia neque neque et eros. Vestibulum
+mauris purus, pharetra in felis mollis, bibendum faucibus nisi. Nam dictum sapien a velit rhoncus
+condimentum.
+
+###Duis Viverra
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis suscipit risus nec lacinia pharetra.
 Ut magna diam, varius eu elementum vel, suscipit a magna. Nulla ullamcorper sagittis elit, eget
@@ -32,7 +33,15 @@ tincidunt mi lobortis sollicitudin. Aliquam pretium est dui, eget ullamcorper di
 vulputate. Sed lobortis, purus sit amet condimentum rhoncus, eros nunc cursus mauris, vel lacinia
 neque neque et eros. Vestibulum mauris purus, pharetra in felis mollis, bibendum faucibus nisi.
 
-##Code Examples
+###Sap dolor
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis suscipit risus nec lacinia pharetra.
+Ut magna diam, varius eu elementum vel, suscipit a magna. Nulla ullamcorper sagittis elit, eget
+tincidunt mi lobortis sollicitudin. Aliquam pretium est dui, eget ullamcorper diam tristique
+vulputate. Sed lobortis, purus sit amet condimentum rhoncus, eros nunc cursus mauris, vel lacinia
+neque neque et eros. Vestibulum mauris purus, pharetra in felis mollis, bibendum faucibus nisi.
+
+##Source code
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis suscipit risus nec lacinia pharetra.
 Ut magna diam, varius eu elementum vel, suscipit a magna. Nulla ullamcorper sagittis elit, eget
@@ -41,17 +50,20 @@ vulputate. Sed lobortis, purus sit amet condimentum rhoncus, eros nunc cursus ma
 neque neque et eros. Vestibulum mauris purus, pharetra in felis mollis, bibendum faucibus nisi.
 
 ```javascript
-    wikismith.watch_themes()
-        .pipe(wikismith.gulp_theme_assets())
-        .pipe(wikismith.module_pages())
-        .pipe(wikismith.render_page())
-        .pipe(wikismith.wiki())
-        .pipe(wikismith.unfolder_index())
+function serve() {
+    wikismith.watch()
+        .pipe(wikismith.pipeline())
         .pipe(gulp.dest('build'))
         .pipe(es.map(function(file, cb) {
             lr.changed({body: { files: [file.path] }});
             cb(null, file);
-        }))
+        }));
+
+    app.use(livereload());
+    app.use(express.static(__dirname + '/build'));
+    app.listen(9292);
+    lr.listen(35729);
+}
 ```
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis suscipit risus nec lacinia pharetra.
 Ut magna diam, varius eu elementum vel, suscipit a magna. Nulla ullamcorper sagittis elit, eget

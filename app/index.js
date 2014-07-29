@@ -8,7 +8,8 @@ var chalk = require('chalk');
 var bower = require('gulp-bower');
 var fs = require('fs');
 var gulp = require('gulp');
-var npm = require('npm-install-dest');
+var npm = require('npm-install');
+var es = require('event-stream');
 
 var WikismithGenerator = yeoman.generators.Base.extend({
   init: function () {
@@ -48,7 +49,7 @@ var WikismithGenerator = yeoman.generators.Base.extend({
     this.copy('_.gitignore', 'gitignore');
     this.directory('pages','pages');
 
-    ghdownload({user: 'wikismith', repo: 'wikismith-themes', ref: 'master'}, path.join(process.cwd(),'node_modules'))
+    ghdownload({user: 'wikismith', repo: 'wikismith-themes', ref: 'master'}, path.join(process.cwd(),'wikismith_themes'))
         .on('dir', function(dir) {
           console.log(dir)
         })
@@ -67,9 +68,8 @@ var WikismithGenerator = yeoman.generators.Base.extend({
                     var fcb = function() {
                         cb(undefined, file);
                     }
-                    var destDir = path.join(process.cwd(), 'node_modules');
                     var packageDir = path.dirname(file.path);
-                    npm(packageDir, destDir, fcb);
+                    npm(packageDir, fcb);
                 }) );
 
             gulp.src('./wikismith_themes/*/bower.json')
