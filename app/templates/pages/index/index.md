@@ -41,8 +41,8 @@ vulputate. Sed lobortis, purus sit amet condimentum rhoncus, eros nunc cursus ma
 neque neque et eros. Vestibulum mauris purus, pharetra in felis mollis, bibendum faucibus nisi.
 
 ```javascript
-    wikismith.watch_modules()
-        .pipe(wikismith.build_module_assets())
+    wikismith.watch_themes()
+        .pipe(wikismith.gulp_theme_assets())
         .pipe(wikismith.module_pages())
         .pipe(wikismith.render_page())
         .pipe(wikismith.wiki())
