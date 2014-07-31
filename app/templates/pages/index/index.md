@@ -1,7 +1,9 @@
 ---
 title: Congratulations!
 subtitle: You have successfully setup your Wikismith project.
-module: bs3
+created: 2014/06/29 16:40 CST
+author: Jeffrey R. Hicks
+theme: bs3
 ---
 
 # Getting Started

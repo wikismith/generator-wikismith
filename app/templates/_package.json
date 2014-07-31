@@ -7,6 +7,6 @@
     "express": "^4.7.2",
     "gulp": "^3.6.2",
     "tiny-lr": "0.0.9",
-    "wikismith": "^0.2.0"
+    "wikismith": "^0.3.0"
   }
 }
