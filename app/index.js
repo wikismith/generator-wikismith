@@ -49,7 +49,7 @@ var WikismithGenerator = yeoman.generators.Base.extend({
     this.copy('_.gitignore', 'gitignore');
     this.directory('pages','pages');
 
-    ghdownload({user: 'wikismith', repo: 'wikismith-themes', ref: 'master'}, path.join(process.cwd(),'wikismith_themes'))
+    ghdownload({user: 'wikismith', repo: 'wikismith-themes', ref: 'master'}, path.join(process.cwd(),'themes'))
         .on('dir', function(dir) {
           console.log(dir)
         })
@@ -63,7 +63,7 @@ var WikismithGenerator = yeoman.generators.Base.extend({
           console.error(err)
         })
         .on('end', function() {
-            gulp.src('./wikismith_themes/*/bower.json')
+            gulp.src('./themes/*/bower.json')
                 .pipe( es.map( function(file, cb) {
                     var fcb = function() {
                         cb(undefined, file);
@@ -72,7 +72,7 @@ var WikismithGenerator = yeoman.generators.Base.extend({
                     npm(packageDir, fcb);
                 }) );
 
-            gulp.src('./wikismith_themes/*/bower.json')
+            gulp.src('./themes/*/bower.json')
                 .pipe(es.map( function(file, cb) {
                         var module_path = path.dirname(file.path);
                         bower({cwd: module_path});
